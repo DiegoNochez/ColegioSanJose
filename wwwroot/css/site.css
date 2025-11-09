@@ -1,0 +1,82 @@
+:root {
+    --brand: #0d6efd;
+    --soft: #f7f9fc;
+}
+
+body {
+    background: var(--soft);
+}
+
+.card {
+    border: 0;
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+    border-radius: 1rem;
+}
+
+.table {
+    background: #fff;
+    border-radius: .75rem;
+    overflow: hidden;
+}
+
+    .table thead th {
+        background: #f1f4f9;
+        font-weight: 600;
+    }
+
+.btn {
+    border-radius: .75rem;
+}
+
+.form-control, .form-select {
+    border-radius: .75rem;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: 1rem;
+}
+
+    .page-title i {
+        font-size: 1.4rem;
+        color: var(--brand);
+    }
+
+.actions-bar {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+.kpi {
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    color: #fff;
+}
+
+.kpi-blue {
+    background: #0d6efd;
+}
+
+.kpi-green {
+    background: #198754;
+}
+
+.kpi-orange {
+    background: #fd7e14;
+}
+
+h1.fw-bold {
+    font-size: 2rem;
+}
+
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }

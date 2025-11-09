@@ -1,0 +1,38 @@
+@model ColegioSanJose.Models.Materia
+
+@{
+    ViewData["Title"] = "Eliminar Materia";
+}
+
+<div class="page-title">
+    <i class="bi bi-journal-x"></i>
+    <h2 class="m-0">@ViewData["Title"]</h2>
+</div>
+
+<div class="card p-4">
+    <h4 class="mb-3 text-danger">¿Estás seguro que deseas eliminar esta materia?</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Nombre de la Materia</dt>
+        <dd class="col-sm-9 fw-semibold">@Model.NombreMateria</dd>
+
+        <dt class="col-sm-3">Docente</dt>
+        <dd class="col-sm-9">@Model.Docente</dd>
+
+        <dt class="col-sm-3">Descripción</dt>
+    </dl>
+
+    <form asp-action="Delete">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="MateriaId" />
+        <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash-fill me-1"></i> Eliminar
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>

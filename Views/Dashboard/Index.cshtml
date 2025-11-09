@@ -1,0 +1,105 @@
+﻿@model ColegioSanJose.Models.ViewModels.DashboardVM
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-3">@ViewData["Title"]</h1>
+
+<div class="row mt-4 g-3">
+    <div class="col-md-4">
+        <div class="card text-bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Alumnos</h5>
+                <p class="card-text display-6">@Model.TotalAlumnos</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Materias</h5>
+                <p class="card-text display-6">@Model.TotalMaterias</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Expedientes</h5>
+                <p class="card-text display-6">@Model.TotalExpedientes</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header fw-bold">Top 5 alumnos por promedio</div>
+            <div class="card-body">
+                <canvas id="chartTopAlumnos"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header fw-bold">Promedio por materia</div>
+            <div class="card-body">
+                <canvas id="chartPromedioMaterias"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Datos desde el modelo (serializados a JSON)
+        const labelsTopAlumnos = @Html.Raw(JsonSerializer.Serialize(Model.LabelsTopAlumnos));
+        const dataTopAlumnos   = @Html.Raw(JsonSerializer.Serialize(Model.DataTopAlumnos));
+
+        const labelsMaterias = @Html.Raw(JsonSerializer.Serialize(Model.LabelsMaterias));
+        const dataPromMat    = @Html.Raw(JsonSerializer.Serialize(Model.DataPromedioMaterias));
+
+        const labelsGrados = @Html.Raw(JsonSerializer.Serialize(Model.LabelsGrados));
+        const dataGrados   = @Html.Raw(JsonSerializer.Serialize(Model.DataAlumnosPorGrado));
+
+        // Top 5 Alumnos (Bar)
+        new Chart(document.getElementById('chartTopAlumnos'), {
+            type: 'bar',
+            data: {
+                labels: labelsTopAlumnos,
+                datasets: [{
+                    label: 'Promedio',
+                    data: dataTopAlumnos
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true, suggestedMax: 10 } }
+            }
+        });
+
+        // Promedio por Materia (Bar)
+        new Chart(document.getElementById('chartPromedioMaterias'), {
+            type: 'bar',
+            data: {
+                labels: labelsMaterias,
+                datasets: [{
+                    label: 'Promedio',
+                    data: dataPromMat
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true, suggestedMax: 10 } }
+            }
+        });
+
+    </script>
+}

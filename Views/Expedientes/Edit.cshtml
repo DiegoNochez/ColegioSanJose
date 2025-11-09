@@ -1,0 +1,57 @@
+@model ColegioSanJose.Models.Expediente
+@{
+    ViewData["Title"] = "Editar Expediente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <i class="bi bi-card-checklist"></i>
+    <h2 class="m-0">@ViewData["Title"]</h2>
+</div>
+
+<div class="card p-4">
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="ExpedienteId" />
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="row g-3">
+            <div class="col-md-6 form-floating">
+                <select asp-for="AlumnoId" asp-items="ViewBag.AlumnoId" class="form-select" aria-label="Alumno"></select>
+                <label asp-for="AlumnoId">Alumno</label>
+                <span asp-validation-for="AlumnoId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 form-floating">
+                <select asp-for="MateriaId" asp-items="ViewBag.MateriaId" class="form-select" aria-label="Materia"></select>
+                <label asp-for="MateriaId">Materia</label>
+                <span asp-validation-for="MateriaId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4 form-floating">
+                <input asp-for="NotaFinal" class="form-control" type="number" min="1" max="10" step="0.01" placeholder="Nota final" />
+                <label asp-for="NotaFinal"></label>
+                <span asp-validation-for="NotaFinal" class="text-danger"></span>
+            </div>
+
+            <div class="col-12 form-floating">
+                <textarea asp-for="Observaciones" class="form-control" placeholder="Observaciones" style="height:120px"></textarea>
+                <label asp-for="Observaciones"></label>
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check2-circle me-1"></i> Guardar cambios
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left-short me-1"></i> Volver
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

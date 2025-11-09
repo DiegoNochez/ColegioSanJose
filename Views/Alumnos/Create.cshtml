@@ -1,0 +1,56 @@
+@model ColegioSanJose.Models.Alumno
+@{
+    ViewData["Title"] = "Nuevo Alumno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <i class="bi bi-person-plus-fill"></i>
+    <h2 class="m-0">@ViewData["Title"]</h2>
+</div>
+
+<div class="card p-4">
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="row g-3">
+            <div class="col-md-6 form-floating">
+                <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
+                <label asp-for="Nombre"></label>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 form-floating">
+                <input asp-for="Apellido" class="form-control" placeholder="Apellido" />
+                <label asp-for="Apellido"></label>
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4 form-floating">
+                <input asp-for="FechaNacimiento" type="date" class="form-control" placeholder="Fecha de nacimiento" />
+                <label asp-for="FechaNacimiento"></label>
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4 form-floating">
+                <input asp-for="Grado" class="form-control" placeholder="Grado (ej: 1°)" />
+                <label asp-for="Grado"></label>
+                <span asp-validation-for="Grado" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check2-circle me-1"></i> Guardar
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left-short me-1"></i> Volver
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

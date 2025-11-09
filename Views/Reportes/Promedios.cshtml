@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ColegioSanJose.Models.ViewModels.PromedioAlumnoVM>
+@{
+    ViewData["Title"] = "Promedio de notas por alumno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal promGeneral = (ViewBag.PromedioGeneral is decimal d) ? d : 0m;
+    string gradoSel = ViewBag.GradoSeleccionado as string ?? "";
+}
+
+<div class="page-title">
+    <i class="bi bi-graph-up"></i>
+    <h2 class="m-0">@ViewData["Title"]</h2>
+</div>
+
+<div class="card p-3 mb-3">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label">Grado</label>
+            <select name="grado" class="form-select" asp-items="@(ViewBag.Grados)">
+                <option value="">(Todos)</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary w-100" type="submit">
+                <i class="bi bi-funnel me-1"></i> Filtrar
+            </button>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-outline-secondary w-100" asp-action="Promedios">
+                <i class="bi bi-x-circle me-1"></i> Limpiar
+            </a>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi kpi-green text-center">
+                <div class="small">Promedio general</div>
+                <div class="fs-4 fw-bold">@promGeneral.ToString("0.00")</div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Alumno</th>
+                <th class="text-center"># Materias</th>
+                <th class="text-center">Promedio</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                // badge por rango: >=9 verde, >=7 ámbar, <7 rojo
+                var badgeClass = r.Promedio >= 9 ? "bg-success"
+                : r.Promedio >= 7 ? "bg-warning text-dark"
+                : "bg-danger";
+
+                <tr>
+                    <td>@r.Alumno</td>
+                    <td class="text-center">@r.CantidadMaterias</td>
+                    <td class="text-center">
+                        <span class="badge @badgeClass rounded-pill px-3 py-2">
+                            @r.Promedio.ToString("0.00")
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           asp-controller="Alumnos" asp-action="Details" asp-route-id="@r.AlumnoId">
+                            <i class="bi bi-person-vcard"></i> Ver alumno
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info mt-3">
+        No hay datos para el filtro seleccionado @(string.IsNullOrEmpty(gradoSel) ? "" : $"(Grado: {gradoSel})").
+    </div>
+}
